@@ -14,24 +14,37 @@ privacy and utility metrics in a peer to peer network of autonomous researchers.
 Hence, the obejctive is make the anonymized data sets shareable and suitable for all involved shareholder groups
 by preserving the privacy without the application of cryptographic technologies.
 
+
 **Implemented modules:** 
 
-ARX - De-Identification Library
-AngularJS - Front-end
-Spring MVC - REST Back-end
-Spring Integration - P2P Back-End
+ARX - _De-Identification Library_
+
+AngularJS - _Front-end_
+
+Spring MVC - _REST Back-end_
+
+Spring Integration - _P2P Back-End_
+
 
 **2-tier structure:**
 
 Presentation-tier
+
 {User Interactions, Core Operations}
+
 {Controller}
+
 {Request Handling}
 
+
 Application-tier
+
 {Request Handling}
+
 {User Services, P2P Services}
+
 {Data Set Services}
+
 
 **P2P Communication flow**
 
