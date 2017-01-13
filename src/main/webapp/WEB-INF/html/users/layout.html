@@ -1,0 +1,49 @@
+
+<div ng-controller="UserController">
+
+
+	<div> 
+	<p> Existing User </p>
+	</div>
+	
+	<div>
+	<ul data-ng-repeat="user in users">
+		<li style="font-size: 20px; color: blue">{{user.name}}</li>
+		<p style="font-size: 10px; color: grey">{{user.id}}</p>
+		<button type="button" class="btn btn-primary"
+		        data-ng-click="removeUser(user.id)">Delete
+		</button>
+	</ul>
+	
+
+	</div>
+	
+	
+	
+	
+	<div> 
+	<p> Create new User </p>
+	<input type="text" id="input_user_name" ng-model="user.name"
+		   placeholder="User Name" />
+				
+					
+	<button type="button" class="btn btn-primary"
+			ng-click="addNewUser(user)">Add User
+	</button>
+	<button type="button" class="btn btn-primary"
+		    ng-click="removeAllUsers()">Remove all users
+	</button>
+	
+	</div>
+
+	
+
+
+
+
+</div>
+
+	
+	
+
+

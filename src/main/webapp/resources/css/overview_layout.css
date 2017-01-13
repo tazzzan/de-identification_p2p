@@ -1,0 +1,389 @@
+#header{
+width: 1700px;
+background-color: green;
+float: left;
+} 
+
+#datasetImport{
+width: 1600px;
+margin-left: 100px;
+float: left;
+}
+
+#loadNewDataset{	
+width: 1600px;
+padding-right: 300px;
+float: left;
+}
+
+.input_dataset{
+height: 40px;
+color: green;
+font-size: 15px;
+margin-top: 20px;
+margin-right: 20px;
+float: left;
+}
+
+#toggleFilesInSystemArea{
+width: 1600px;
+height: 25px;
+margin-top: 10px;
+background-color: #4e9a06;
+color: white;
+font-size: 17px;
+text-align: center;
+float: left;
+}
+
+#filesInSystem{
+width: 1600px;
+background-color: #4e9a06;
+color: white;
+font-size: 16px;
+padding-left: 10px;
+float: left;
+}
+
+#leftBar{
+width: 100px;
+height: 1000px;
+float: left;
+overflow: auto;
+}
+
+#navBar{
+width:100%;
+height:50%;
+border: solid;
+}
+
+#userBar{
+width:100%;
+height:50%;
+border: solid;
+}
+
+#main{
+width:2000px;
+height:840px;
+}
+
+#dataSetBox{
+width:2000px;;
+height:445px;
+}
+
+
+#tabsForDatasets{
+width: 1700px;
+height: 35px;
+padding-top: 10px;
+background-color: green;
+float: left;
+}
+
+.tabForDataset{
+background-color: green;
+font-size: 19px;
+color: #d3d7cf;
+padding-left:40px;
+padding-right:40px;
+float:left;
+}
+
+
+.tabForDataset:hover{
+background-color: #4e9a06;
+}
+
+#existingDatasets{	
+height: 400px;
+min-width: 510px;
+max-width: 800px;
+float: left;
+}
+
+
+#resultDatasets{	
+height: 400px;
+min-width: 540px;
+max-width: 830px;
+float: left;
+}
+
+.header_ds{
+min-width: 510px;
+max-width: 800px;
+height: 30px;
+background-color: #4e9a06;
+font-size: 17px;
+font-style: italic;
+color: white;
+}
+
+.columnName_ds{
+margin-left: 10px;
+margin-right: 10px;
+font-size: 17px;
+color: green;
+}
+
+.content_ds{
+margin-left: 5px;
+margin-right: 5px;
+font-size:14px;
+color: dark-grey;
+
+}
+
+table, td  {
+border: 1px solid #babdb6;
+border-collapse: collapse;
+text-align: center;
+margin: 20px auto;
+}
+
+.previewInTable{
+height: 400px;
+min-width: 510px;
+max-width: 800px;
+float: left;
+overflow: auto;
+}
+
+#tabsForResults{
+width: 30px;
+height: 370px;
+background-color: #4e9a06;
+float: left;
+}
+
+#providerBox{
+height: 440px;
+width: 1700px;
+float: left;
+}
+
+#headerParameters{
+width: 1700px;
+height: 40px;
+font-size:20px; 
+color: white;
+background-color: green;
+padding: 5px;
+float: left;
+}
+
+#datasetDefinitionParameters{
+height: 400px;
+width: 750px;
+float: left;
+}
+
+#attributTypesForColumns{
+height: 400px;
+width: 350px;
+border-bottom: solid;
+border-right: solid;
+border-color: green;
+float: left;
+}
+
+#attributeTypesSelection{
+height: 340px;
+width: 250px;
+margin: 0 auto;
+overflow-y: auto;	
+}
+
+#buttonSubmitAttribute{
+width: 200px; 
+height: 40px;
+margin: 10px auto;
+}
+
+#hierarchySelecter{
+height: 400px;
+width: 400px;
+background-color: green;
+color: white;
+font-size: 18px;
+padding-left: 10px;
+float: left;
+}
+
+.input_hierarchy{
+width: 250px;
+height: 40px; 
+margin-top: 10px; 
+font-size: 14px; 
+color: green;
+}
+
+#btn_import_hierarchy{
+font-size:18px; 
+height: 35px; 
+float: left; 
+margin-top: 20px;
+}
+
+#btn_import_no_submit_hierarchy{
+font-size:18px; 
+height: 35px; 
+float: left; 
+margin-top: 10px;
+}
+
+#btn_import_man_hierarchy{
+font-size:18px; 
+height: 35px; 
+float: left; 
+margin-top: 20px; 
+}
+
+
+#algorithms{
+height: 400px;
+width: 600px;
+background-color: #4e9a06;
+color: white;
+font-size: 18px;
+padding-left: 10px;
+float: left;
+}
+
+#algorithm_k_anonymity{
+width: 600px;	
+}
+
+#btn_create_kanon{
+font-size:18px; 
+height: 35px; 
+float: left; 
+margin-top: 20px; 
+}
+
+#sensitiveAlgorithms{
+width: 600px;
+float: left;
+}
+
+#algorithm_l_diversity{
+width: 600px;
+float: left;
+}
+#algorithm_t_closeness{
+width: 600px;
+float: left;	
+}
+.columnNamesInProviderView{
+color: green;
+}
+
+#definitions{
+float: left;
+height: 400px;
+width: 350px;
+overflow-y: auto;
+}
+.chosenDefinition{
+padding: 10px;
+margin: 5px;
+float: left;	
+border-style: dotted;
+border-width: 3px;
+border-color: green;
+border-radius: 20px;
+}
+
+.definitionActive{
+border-style: solid;
+}
+
+
+#noQIColumns{
+width: 145px;
+float:left;
+}
+
+.noQIColumn{
+width: 145px;
+}
+
+#hierarchyColumns{
+float: left;
+width: 145px;
+}
+
+.hierarchyColumn{
+width: 145px;	
+}
+
+
+#decisionSupport{
+height: 400px;
+width: 300px;
+float: left;
+
+overflow: auto;
+}
+
+#parameterRow{
+width: 300px;
+float: left;
+border-style: solid;
+}
+
+.listValue{
+height: 30px;
+padding: 3px;
+max-width: 60px;
+float: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+input[type=radio] {
+border: 0px;
+width: 40px;
+height: 20px;
+}
+
+
+
+
+::-webkit-input-placeholder {
+color: #555753;
+padding-left: 10px;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+color: #555753;  
+padding-left: 10px;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+color: #555753;  
+padding-left: 10px;
+}
+
+:-ms-input-placeholder {  
+color: #555753;  
+padding-left: 10px;
+}
+
+
+.tabDatasetActive{
+background-color: #4e9a06;
+color: white;
+}

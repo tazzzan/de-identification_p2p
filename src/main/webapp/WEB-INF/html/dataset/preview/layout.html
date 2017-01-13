@@ -1,0 +1,28 @@
+
+<div id="existingDatasets">
+
+	<div class="header_ds">
+		Imported data set: 
+	</div> 
+
+	<div class="previewInTable">
+		<table>
+			<tr>
+				<td data-ng-repeat="column in datasetSelected.properties.columns"> 
+					<div class="columnName_ds">
+					{{column.name}}
+					</div>
+					</td>
+				 </tr>
+					  		 
+			<tr data-ng-repeat="value in datasetSelected.data">			  		
+				<td data-ng-repeat="content in value">
+			  		<div class="content_ds">
+		  			{{content}}
+			  		</div>
+			  	</td>
+		 	</tr>
+		</table>
+	</div>
+</div>
+		

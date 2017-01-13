@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" ng-app="Deidentification">
+<head>
+    <meta charset="utf-8"/>
+    <title>Service App</title>
+    <link rel="stylesheet" href="resources/css/app.css"/>
+    <link rel="stylesheet" href="resources/css/overview_layout.css"/>
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" />
+  
+  
+<script src="resources/js/lib/angular/angular.js"></script>
+
+ 
+</head>
+
+<body>
+
+
+<div ng-controller="DataSetController">		
+			<div>
+				<input type="text" data-ng-model="remoteUserIp"
+					   placeholder=" Remote Peer IP: " style="width: 150px;"/>
+			
+				<button type = "button" class="btn btn-primary"  data-ng-click="connect()">
+				 Connect
+				</button>
+		
+			</div>
+    <div ng-view=""></div>
+</div>
+
+<script src="resources/js/app.js"></script>
+
+<script src="resources/js/controllers/UserController.js"></script>
+<script src="resources/js/controllers/DataSetController.js"></script>
+<script src="resources/js/controllers/ProviderController.js"></script>
+<script src="resources/js/controllers/PeerToPeerController.js"></script>
+
+</body>
+</html>

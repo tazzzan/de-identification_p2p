@@ -1,0 +1,57 @@
+<div id="peers">
+	<div data-ng-repeat="peer in peersList">
+		peer number: {{$index+1}}
+		<div style="font-size:12px;">
+		{{peer}}
+		</div>		
+	</div>
+	<div data-ng-repeat="datasetId in datasetSelected.parameters.similarDatasets">
+		analog dataset: {{$index+1}}
+		<div style="font-size:12px;">
+		{{datasetId}}
+		</div>
+	</div>
+</div>
+
+	
+	
+	
+<div id="decisionSupport">
+	<div data-ng-repeat="similarDataset in datasetSelected.similarDatasets">
+		<div data-ng-repeat="parametersResult in similarDataset.parametersResults">
+			
+			<div id="parameterRow"	style="float:left;">		
+			
+				<div id="parametersUsed">	
+					<div id="k-Anonymity" class="listValue">
+							{{parametersResult.kAnonymityValue}}
+					</div>
+						
+					<div id="k-anonymity-max-outliers" class="listValue">
+							{{parametersResultkAnonymityMaxOutliers}}
+					</div>
+						
+					<div data-ng-repeat="column in parametersResult.definition.columns">
+						<div data-ng-show="column.angularParameters.algorithmIsSensitive">	
+							
+							<div data-ng-show="column.angularParameters.algorithmIsLDiversity"
+							id="l-diversity" class="listValue">
+								{{column.angularParameters.algorithmLDiversityValue}}
+							</div>
+						
+							<div data-ng-show="column.angularParameters.algorithmIsTCloseness"
+							id="t-closeness" class="listValue">
+								{{column.angularParameters.algorithmTClosenessHierarchialGroundDistance}}
+							</div>
+						</div>
+					</div>
+					
+					<div id="informationLoss" class="listValue">
+						{{parametersResult.informationLoss}}
+					</div>
+				</div>	
+			</div>						
+		</div>
+	</div>
+</div>
+	

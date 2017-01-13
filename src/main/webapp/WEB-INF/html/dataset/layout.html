@@ -1,0 +1,28 @@
+<div data-ng-hide="isThereAnyDatasets()">
+
+	<div id="tabsForDatasets">
+		<div data-ng-repeat="ds in datasets">
+			<div class="tabForDataset" data-ng-class="{tabDatasetActive: checkIfSelected(ds) }"
+				 	 data-ng-click="selectDataset(ds)">
+				   	{{ds.properties.name}}
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<div data-ng-include="'dataset/preview/layout'"></div>
+	</div>
+		
+	<div>
+		<div data-ng-include="'dataset/result/layout'"></div>
+	</div>
+	
+	<div>
+		<div data-ng-include="'dataset/configuration/layout'"></div>
+	</div>
+
+</div>
+
+
+
+

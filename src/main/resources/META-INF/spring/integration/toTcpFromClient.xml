@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:int-groovy="http://www.springframework.org/schema/integration/groovy"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/integration/groovy http://www.springframework.org/schema/integration/groovy/spring-integration-groovy.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:property-placeholder/>
+<!--  Client-side outbound TCP channel -->
+
+	<!-- Properties -->	  
+
+	<bean id="javaSerializer"
+      class="org.springframework.core.serializer.DefaultSerializer"/>
+	<bean id="javaDeserializer"
+      class="org.springframework.core.serializer.DefaultDeserializer"/>
+
+<!--  Client-side outbound TCP channel 
+PEER_ID -->	
+	
+	<int:gateway id="gateway3"
+		service-interface="com.arx.springmvcangularjs.peerToPeer.talker.SimpleGateway3"
+		default-request-channel="input3"/>
+
+	<!-- channels -->
+
+	<int:channel id="input3" />
+	
+	<!-- Client-Side outbound TCP --> 
+	
+	<int-ip:tcp-outbound-gateway id="outboundGateway3"
+		request-channel="input3"
+		connection-factory="clientToTcp3"/>
+		
+	<int-ip:tcp-connection-factory id="clientToTcp3"
+		type="client"
+		host="${remoteIp}"
+		port="5602"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+		
+		
+	<!--  Get IP remote from header -->
+<!--  Client-side outbound TCP channel 
+	PARAMETERS  -->
+
+	<!-- @as object **Definition.class** -->
+	
+	<int:gateway id="gateway"
+		service-interface="com.arxcoder.springmvcangularjs.peerToPeer.talker.SimpleGateway"
+		default-request-channel="input"/>
+
+	<!-- channels -->
+
+	<int:channel id="input" />
+	
+	<!-- Client-Side outbound TCP --> 
+	
+	<int-ip:tcp-outbound-gateway id="outboundChannelAdapter"
+		request-channel="input"
+		connection-factory="clientToTcp"
+		reply-timeout="10000000000000"/>
+		
+	<int-ip:tcp-connection-factory id="clientToTcp"
+		type="client"
+		host="${remoteIp}"
+		port="5600"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+      
+<!--  Client-side outbound TCP channel 
+ PROPERTIES -->
+	  
+	<!-- @as object **Properties.class** -->
+	
+	<int:gateway id="gateway2"
+		service-interface="com.arx.springmvcangularjs.peerToPeer.talker.SimpleGateway2"
+		default-request-channel="input2"/>
+
+	<!-- channels -->
+
+	<int:channel id="input2" />
+	
+	<!-- Client-Side outbound TCP --> 
+	
+	<int-ip:tcp-outbound-gateway id="outboundChannelAdapter2"
+		request-channel="input2"
+		connection-factory="clientToTcp2"/>
+		
+	<int-ip:tcp-connection-factory id="clientToTcp2"
+		type="client"
+		host="${remoteIp}"
+		port="5601"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+       
+</beans>

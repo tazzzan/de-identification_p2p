@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:property-placeholder/>
+	
+<!--  Server-side inbound TCP channel
+	  Sends data to HTTP Controler MVC 
+	  
+	  PARAMETERS -->
+	  
+	<!-- Properties -->	
+	  
+	  
+	<bean id="javaSerializer"
+      class="org.springframework.core.serializer.DefaultSerializer"/>
+	<bean id="javaDeserializer"
+      class="org.springframework.core.serializer.DefaultDeserializer"/>
+	
+	<!-- Channels Server-Side -->
+	<int:channel id="requestChannel" />
+	<int:channel id="toControllerChannel" /> 
+	<int:channel id="toTcpChannel" />
+	
+	<!-- Server-Side inbound TCP -->  
+		
+	<int-ip:tcp-inbound-gateway id="inboundChannelAdapter"
+		request-channel="requestChannel"
+		reply-channel="toTcpChannel"
+		connection-factory="connectionFactoryServerTCP"
+		error-channel="errorChannel"/>
+
+	<!-- First make a seriazable object -->
+	
+	<int-ip:tcp-connection-factory id="connectionFactoryServerTCP"
+		type="server"
+		port="5600"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+			
+	<!-- Then add json header information -->
+ 
+	<int:header-enricher input-channel="requestChannel"
+						 output-channel="toControllerChannel">
+	    <int:header name="Content-Type" value="application/json" />
+	</int:header-enricher> 
+
+	<!-- Send transformed json object to localhost controller
+		 There make the Risk And Utility Analysis -->	
+									
+	<int-http:outbound-gateway url="http://localhost:10100/arx/dataset/utilityAndRisk"
+	                           request-channel="toControllerChannel" 
+	                           reply-channel="toTcpChannel"
+	                           message-converters="jsonConverter"
+	                           expected-response-type="java.util.ArrayList"/>
+	                           
+	<bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+		  <bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+		 </property>
+	</bean>
+
+	
+<!--  Server-side inbound TCP channel
+	  Sends data to HTTP Controler MVC 
+	  
+	  PROPERTIES -->
+
+<!-- Channels Server-Side -->
+	<int:channel id="requestChannel2" />
+	<int:channel id="toControllerChannel2" /> 
+	<int:channel id="toTcpChannel2" />
+	
+	<!-- Server-Side inbound TCP -->  
+		
+	<int-ip:tcp-inbound-gateway id="inboundChannelAdapter2"
+		request-channel="requestChannel2"
+		reply-channel="toTcpChannel2"
+		connection-factory="connectionFactoryServerTCP2"
+		error-channel="errorChannel"/>
+
+	<!-- First make a seriazable object -->
+	
+	<int-ip:tcp-connection-factory id="connectionFactoryServerTCP2"
+		type="server"
+		port="5601"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+		
+									
+	<!-- Then add json header information -->
+ 
+	<int:header-enricher input-channel="requestChannel2"
+						 output-channel="toControllerChannel2">
+	    <int:header name="Content-Type" value="application/json" />
+	</int:header-enricher> 
+
+	<!-- Send transformed json object to localhost controller
+		 There make the Risk And Utility Analysis -->	
+									
+	<int-http:outbound-gateway url="http://localhost:10100/arx/dataset/getSimilarDatasets"
+	                           request-channel="toControllerChannel2" 
+	                           reply-channel="toTcpChannel2"
+	                           message-converters="jsonConverter2"
+	                           expected-response-type="java.util.ArrayList"/>
+	                           
+	<bean id="jsonConverter2" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+		  <bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+		 </property>
+	</bean>
+
+
+<!--  Server-side inbound TCP channel
+	  Sends data to HTTP Controler MVC 
+	  
+	  PEER_ID -->
+
+<!-- Channels Server-Side -->
+	<int:channel id="requestChannel3" />
+	<int:channel id="toControllerChannel3" /> 
+	<int:channel id="toTcpChannel3" />
+	<int:channel id="toEnricherChannel3" />
+	
+	<!-- Server-Side inbound TCP -->  
+		
+	<int-ip:tcp-inbound-gateway id="inboundChannelAdapter3"
+		request-channel="requestChannel3"
+		reply-channel="toTcpChannel3"
+		connection-factory="connectionFactoryServerTCP3"
+		error-channel="errorChannel"/>
+
+	<!-- First make a seriazable object -->
+	
+	<int-ip:tcp-connection-factory id="connectionFactoryServerTCP3"
+		type="server"
+		port="5602"
+		serializer="javaSerializer"
+		deserializer="javaDeserializer"/>
+		
+	<!-- get the ip from incoming request and add to payload -->
+				
+	<int:service-activator input-channel="requestChannel3"
+						   output-channel="toEnricherChannel3" 
+                       	   ref="GetIp" 
+                           method="processInput"/>
+                       
+   	<bean id="GetIp" class="com.arx.springmvcangularjs.peerToPeer.talker.GetIp"/>
+                       					
+	<!-- Then add json header information -->
+ 
+	<int:header-enricher input-channel="toEnricherChannel3"
+						 output-channel="toControllerChannel3">
+	    <int:header name="Content-Type" value="application/json" />
+	</int:header-enricher> 
+
+	<!-- Send transformed json object to localhost controller
+		 There make the Risk And Utility Analysis -->	
+									
+	<int-http:outbound-gateway url="http://localhost:10100/arx/dataset/returnPeerId"
+	                           request-channel="toControllerChannel3" 
+	                           reply-channel="toTcpChannel3"
+	                           message-converters="jsonConverter3"
+	                           expected-response-type="java.lang.String"/>
+	                           
+	<bean id="jsonConverter3" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="objectMapper">
+		  <bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+		 </property>
+	</bean>
+	
+</beans>
+		

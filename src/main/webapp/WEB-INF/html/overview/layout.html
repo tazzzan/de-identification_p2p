@@ -1,0 +1,15 @@
+<div id="header">
+	<div data-ng-include="'dataset/import/layout'"></div>
+</div>
+
+<div id="main">
+
+	<div id="dataSetBox">
+		<div data-ng-include="'dataset/layout'"></div>
+	</div>
+
+	<div id="providerBox" data-ng-hide="isThereAnyDatasets()">
+		<div data-ng-include="'users/providers/layout'"></div>
+	</div>
+
+</div>

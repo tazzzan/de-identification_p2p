@@ -1,0 +1,273 @@
+<div id="headerParameters" style="font-size:20px; color: white;">
+ 	   <p style="float:left;">
+ 	   Parameters for selected data set: {{datasetSelected.properties.name}}
+ 	   </p>
+ 	   
+	   <button type = "button" class="btn btn-primary"
+	   		   style="float:left; margin-left: 30px"
+		       data-ng-click="removeDataset(datasetSelected)">delete
+	   </button> 	
+	  	
+	   <button type="button" class="btn btn-primary" 
+		       data-ng-click="anonymizeDataset(datasetSelected)">anonymize
+	   </button>   
+	   
+</div>
+
+
+<div id="datasetDefinitionParameters">
+
+	<div id="attributTypesForColumns">
+		<div id="attributeTypesSelection">
+			{{datasetSelected.definitionSelected.id}}
+			<div data-ng-repeat="column in datasetSelected.definitionSelected.columns"> 
+				<div   class="columnNamesInProviderView"> 
+					   {{column.name}} 
+				</div>
+				<select data-ng-model="column.attributeType" 
+						data-ng-options="x for x in attributeTypeOptions"
+						data-ng-change="checkAttributeType(column)"
+						style="height: 30px; font-size:15px; margin-bottom:5px;">
+				</select>	
+				
+				<button type="button" class="btn btn-primary" 
+						data-ng-show="containsSensitive(column.attributeType)"
+						data-ng-click="selectColumn(column)"> Algorithm
+				</button>
+
+				<div data-ng-hide="isSensitiveSubmitted(column)">
+					 <p style="color: red;"> needs an algorithm for '{{column.name}}'</p>
+				</div> 
+				
+				<button type="button" class="btn btn-primary" 
+						data-ng-show="containsQuasiIdentifying(column.attributeType)"
+						data-ng-click="selectColumn(column)"> Hierarchy </button>		
+						
+				<div data-ng-hide="isHierarchySubmitted(column)">
+					 <p style="color: red;"> needs a hierarchy for '{{column.name}}'</p>
+				</div> 
+				
+	
+			</div>	
+		</div>	
+		<div id="buttonSubmitAttribute">
+			<button type="button" class="btn btn-primary" 
+		        	data-ng-click="submitAttributeTypes(datasetSelected)">
+		     		submit column attributes   
+			</button>		
+		</div>
+
+	
+	</div>
+	
+	<div id="hierarchySelecter" data-ng-hide="isHierarchySubmitted(datasetSelected.columnSelected)">
+		<div style="font-size: 18px; margin-bottom: 20px;">
+			Hierarchy-builder for the attribute: "{{datasetSelected.columnSelected.name}}"
+		</div>
+		
+		<div class="checkBoxHierarchy">
+			<input type="radio"
+				   name="chkb1"
+				   data-ng-checked="true"
+				   data-ng-click="setHierarchyIsAutomatic(true)">
+				   automatically
+			</input>
+			<input type="radio"
+				   name="chkb1"
+				   data-ng-click="setHierarchyIsAutomatic(false)"> 
+				   manually
+			</input>
+		</div>
+		
+		<div class="loadHierarchy" data-ng-show="datasetSelected.columnSelected.angularParameters.hierarchyIsAutomatic">
+			<input type="text" class="input_hierarchy" 
+				   placeholder="Hierarchy Path" />
+			
+			<input type="text" class="input_hierarchy" 
+				   placeholder="Hierarchy Name (optional)" />
+		
+			<br/>
+			
+			<button type = "button" class="btn btn-primary" id="btn_import_hierarchy">
+				    Import
+			</button>
+			
+			<p style="float:left; margin-top: 20px;margin-right: 30px">  
+			You also might submit without importing an own hierarchy. But, no guarantee for proper hierarchy creation!
+			</p>
+			<button type = "button" class="btn btn-primary"  id="btn_import_no_submit_hierarchy"
+				    data-ng-click="submitHierarchyToAuto(datasetSelected.columnSelected)">
+				    Submit without importing
+			</button>
+
+			
+		</div>
+		<div class="paramsForHierarchy" data-ng-hide="datasetSelected.columnSelected.angularParameters.hierarchyIsAutomatic">
+			<div>
+				Transformation
+				<div class="checkBoxGeneralization">
+						<input type="radio"
+							   name="chkb2"
+							   data-ng-checked="true"
+							   data-ng-click="datasetSelected.columnSelected.angularParameters.hierarchyTransformationMode=0">
+							   Normal
+						</input>
+						<input type="radio"
+							   name="chkb2"
+							   data-ng-click="datasetSelected.columnSelected.angularParameters.hierarchyTransformationMode=1"> 
+							   Interval-based
+						</input>
+				</div>
+				
+				<div  id="GeneralizationNormal" data-ng-show="datasetSelected.columnSelected.angularParameters.hierarchyTransformationMode==0">
+					   <input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.generalizationMin" 
+					   placeholder="Min" />
+					   <input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.generalizationMax" 
+					   placeholder="Max" />
+					   <input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.generalizationBiggerThan" 
+					   placeholder="Bigger than..." />
+					   
+					<button type = "button" class="btn btn-primary" id="btn_import_man_hierarchy"					
+				    data-ng-click="createHierarchyMan(datasetSelected.id,
+				    								  datasetSelected.columnSelected,
+				    								  datasetSelected.columnSelected.angularParameters.generalizationMin,
+				    								  datasetSelected.columnSelected.angularParameters.generalizationMax,
+				    								  datasetSelected.columnSelected.angularParameters.generalizationBiggerThan)">
+				    create hierarchy
+					</button>
+					   
+				</div>
+				
+				<div  id="GeneralizationInterval" data-ng-show="datasetSelected.columnSelected.angularParameters.hierarchyTransformationMode==1">
+					   <input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.generalizationMedian" 
+					   placeholder="Median" />
+					   <input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.genaralizationInterval" 
+					   placeholder="Interval" />
+						microaggregation
+						attribute weight
+				</div>
+				
+				
+		
+			</div>
+		</div>
+	</div>
+</div>	
+<div id="algorithms" data-ng-show="datasetSelected.setHierarchy.attributesSubmitted">   
+		<div id="algorithm_k_anonymity">
+				<div style="float: left; width: 600px;"> k-Anonymity value </div>
+				<input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.parameters.kAnonymityValue"
+					   placeholder="KA value" />
+				<div style="float: left; width: 600px; margin-top: 10px;"> 'Max Outliers' (double '0.02') </div>	
+				<input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.parameters.kAnonymityMaxOutliers"
+					   placeholder="KA max outliers" />			
+	
+		</div>
+		<div id="buttonSubmitKA">
+		
+				<button type = "button" class="btn btn-primary" id="btn_create_kanon"
+						data-ng-show="datasetSelected.kAnonymityIsTrue"
+						data-ng-click="submitAlgorithmKAnon(datasetSelected.parameters)">
+				submit algorithm criteria KA
+				</button>
+		
+		</div>
+		
+		<div id="sensitiveAlgorithms" data-ng-show="datasetSelected.columnSelected.angularParameters.algorithmIsSensitive">
+			<div class="checkBoxSensitiveAlgorithms">
+				<input type="radio"  name="chkb3"
+					   data-ng-click="selectLDiversity()">
+						l-Diversity
+				</input>
+				<input type="radio"  name="chkb3" 
+					   data-ng-click="selectTCloseness()">
+					   t-Closeness
+				</input>				
+			</div>
+			<div id="algorithm_l_diversity" data-ng-show="datasetSelected.columnSelected.angularParameters.algorithmIsLDiversity">
+				<div style="float: left; width: 600px"> l-Diversity value for "{{datasetSelected.columnSelected.name}}" </div>
+				<input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.algorithmLDiversityValue"
+					   placeholder="LD value" />
+				<div style="float: left; width: 600px;">recursive C </div>	
+				<input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.algorithmLDiversityRecursiveC"
+					   placeholder="DL recursive C" />	
+			
+				<button type = "button" class="btn btn-primary" 
+						style="font-size:18px; height: 35px; float: left; margin-top: 20px; "
+						data-ng-click="submitAlgorithmLDiv(datasetSelected)">
+				submit algorithm criteria KA LA
+				</button>			
+			</div>
+			
+			<div id="algorithm_t_closeness" data-ng-show="datasetSelected.columnSelected.angularParameters.algorithmIsTCloseness">
+				<div style="float: left; width:600px;"> t-Closeness hierarchial distance for "{{datasetSelected.columnSelected.name}}" </div>
+				<input type="text" class="input_hierarchy"  
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.algorithmTClosenessHierarchialGroundDistance"
+					   placeholder="TC value" />
+				<div style="float: left; width: 600px"> path to hiearchy </div>	
+				<input type="text" class="input_hierarchy" 
+					   data-ng-model="datasetSelected.columnSelected.angularParameters.algorithmTClosenessPath"
+					   placeholder="path hierarchy" />	
+			
+				<button type = "button" class="btn btn-primary" 
+						style="font-size:18px; height: 35px; float: left; margin-top: 20px; "
+						data-ng-click="submitAlgorithmTClo(datasetSelected)">
+				submit algorithm criteria KA TA
+				</button>			
+			</div>
+		</div>		
+</div>
+
+
+<div id="definitions">
+	<div class="chosenDefinition" 
+	 data-ng-repeat="definition in datasetSelected.parameters.definitions"
+	 data-ng-class="{definitionActive: checkIfDefinitionSelected(definition) }">
+		<button type="button" class="btn btn-primary"
+				data-ng-click="selectDefinition(datasetSelected, definition.id)"> Select Definition
+		</button>
+		<button type="button" class="btn btn-primary"
+				data-ng-click="removeDefinition(datasetSelected, definition.id)"> Remove Definition
+		</button>
+		 {{definition.id}}
+		 <div id="noQIColumns">
+			<div class="noQIColumn"
+				 data-ng-hide="containsQuasiIdentifying(column.attributeType)"
+				 data-ng-repeat="column in definition.columns">
+				<div style="color: green; font-size: 16px;">
+					{{column.name}}	
+				</div>
+				<div style="color: blue; font-size: 15px;">
+					({{column.attributeType}})
+				</div>
+			</div>
+		</div>
+	
+		<div id="hierarchyColumns">
+		 	 <div class="hierarchyColumn"
+				  data-ng-show="containsQuasiIdentifying(column.attributeType)"
+		    	  data-ng-repeat="column in definition.columns">
+				<div style="color: green; font-size: 16px;">
+					{{column.name}}	
+				</div>
+				<div data-ng-repeat="hierarchyLine in column.hierarchy">
+					{{hierarchyLine}}
+				</div>
+			</div>
+		 </div>
+	</div>
+</div>
+
+	
+
+
+		

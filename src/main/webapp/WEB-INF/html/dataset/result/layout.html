@@ -1,0 +1,50 @@
+<div id="resultDatasets">
+
+	<div class="header_ds">
+		Anonymized data set: 
+	</div>
+	
+	<div id="tabsForResults">
+	
+	</div>
+	
+	<div class="previewInTable">
+		<div data-ng-repeat="result in datasetSelected.results">
+			<div id="infoAboutAnonymization">
+				by {{idDataset(result.id)}} 
+				parameters:
+				k-anonymity: {{result.parameters.kAnonymityValue}}
+				k-anonymity-max-outliers: {{result.parameters.kAnonymityMaxOutliers}}
+			
+				<div data-ng-repeat="column in result.parameters.definition.columns">
+					<div data-ng-show="column.angularParameters.algorithmIsSensitive">
+					column{{$index+1}}: {{column.angularParameters.sensitiveColumn.name}}
+					l-diversity: {{column.angularParameters.algorithmLDiversityValue}}
+					</div>
+				</div>
+				
+				INFORMATION LOSS: {{result.parameters.informationLoss}}
+				
+			</div>
+			<table>
+		  	<tr>
+				<td data-ng-repeat="cn in datasetSelected.properties.columns">
+					<div class="columnName_ds">
+					{{cn.name}} 
+					</div> 
+				</td>
+			</tr>
+				<tr data-ng-repeat="row in result.result">
+					<td data-ng-repeat="columnValue in row">
+						<div class="content_ds">
+						{{columnValue}}
+						</div>
+					</td>
+				</tr>
+		
+		</table>
+	</div>
+	
+	</div>
+	
+</div>

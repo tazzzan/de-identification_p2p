@@ -1,0 +1,37 @@
+	<div id="datasetImport">
+	
+		<div id="loadNewDataset">
+			<input type="text" class="input_dataset" data-ng-model="dataset.properties.path" style="width: 400px;"
+			placeholder="Dataset Path" />
+			
+			<input type="text" class="input_dataset" data-ng-model="dataset.properties.name" style="width: 250px;"
+			placeholder="Dataset Name (optional)" />
+			
+			<button type = "button" class="btn btn-primary" style="font-size:18px; float: left; margin-top: 20px; margin-left:20px;"
+				    data-ng-click="addNewDataset(dataset)">Import
+			</button>
+			
+			<button type = "button" class="btn btn-primary" style="font-size:18px;  float: left; margin-top: 20px; margin-left:20px; margin-right:60px;"
+					data-ng-click="removeAllDatasets()">Remove all
+			</button>
+	
+		</div>
+		
+		<div id="toggleFilesInSystemArea" data-ng-show="custom"
+			 data-ng-click="custom=!custom"> Click 'here' to check datasets in file system</div>
+		
+		<div id="toggleFilesInSystemArea" data-ng-hide="custom" style="font-size: 30px;"
+			 data-ng-click="custom=!custom">  &#94;  </div>
+		
+		<div id="filesInSystem" data-ng-hide="custom">
+			<div data-ng-repeat="file in datasetsInFolder">
+			
+				 <button type="button" class="btn btn-primary" style="font-size:12px; height: 18px;padding:5px;"
+				 data-ng-click="dataset.properties.path=file">>></button>
+				 
+				{{file}}
+			</div>
+		</div>
+		
+	</div>
+	
